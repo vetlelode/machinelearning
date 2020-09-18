@@ -1,10 +1,8 @@
 import numpy as np
-import matplotlib.pyplot as plt
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.cluster import KMeans
-from scipy.spatial import distance
 from sklearn import datasets
 from sklearn.model_selection import train_test_split
+from sklearn import model_selection
 # This is functionally the same as reading the data from the CSV file in the assignment
 iris = datasets.load_iris()
 X_tot = iris.data
@@ -12,8 +10,9 @@ y_tot = iris.target
 X_train, X_test, y_train, y_test = train_test_split(
     X_tot, y_tot, test_size=0.25, random_state=42)
 
-
-est = KNeighborsClassifier(n_neighbors=15).fit(X_train, y_train)
+model = KNeighborsClassifier(n_neighbors=15)
+result = model_selection.cross_val_score(model, X_test, y_test)
+est = model.fit(X_train, y_train)
 # run over the entirety of the test data and report the accuracy level
 predictions = est.predict(X_test)
 correct = 0
