@@ -6,13 +6,13 @@ from sklearn import model_selection
 import matplotlib.pyplot as plt
 # This is functionally the same as reading the data from the CSV file in the assignment
 iris = datasets.load_iris()
+# Make a "total" array to be split off
 X_tot = iris.data
 y_tot = iris.target
-
+# Split the dataset
 X_train, X_test, y_train, y_test = train_test_split(
     X_tot, y_tot, test_size=0.25)
-
-
+# These are used for the Graphing
 accX = []
 accY = []
 # Test out 20 different variations of n_neighbours and find the most accurate one
@@ -24,9 +24,11 @@ for i in range(21):
     accY.append(result.mean())
     accX.append(i+1)
 # Graph out the accuracy level of the varying levels of n_neighbours
+plt.style.use("bmh")
 fig, ax = plt.subplots()
 ax.bar(accX, accY)
 ax.set_xlabel('n_neighbours')
 plt.xlim(0.5, 20.5)
 ax.set_ylabel('Mean accuracy')
 plt.show()
+plt.savefig("demo.png")
