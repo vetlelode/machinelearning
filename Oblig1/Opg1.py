@@ -1,11 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import statistics
 import pandas as pd
-from sklearn.model_selection import train_test_split
 
 
 data_tot = pd.read_csv('ex1data1.csv')
+data_tot = data_tot.sample(frac=1).reset_index(drop=True)
 # Explore the shape of the data
 print(data_tot.shape)
 
@@ -20,7 +19,8 @@ Y_test = test.iloc[:, 1]
 X = data.iloc[:, 0]
 Y = data.iloc[:, 1]
 
-m, c = 0
+m = 0
+c = 0
 n = float(len(X))
 L = 0.0001
 
@@ -40,3 +40,4 @@ plt.scatter(X_test, Y_test, color="g")
 plt.plot([min(X), max(X)], [min(Y_Pred), max(Y_Pred)], color="r")
 
 plt.show()
+plt.savefig("Opg1.png")

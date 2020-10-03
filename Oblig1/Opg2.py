@@ -15,7 +15,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 # These are used for the Graphing
 accX = []
 accY = []
-top_score = [420, 0.0]
+top_score = [0, 0.0]
 # Test out 20 different variations of n_neighbours and find the most accurate one
 for i in range(21):
     kfold = model_selection.KFold(
@@ -35,11 +35,15 @@ ax.set_xlabel('n_neighbours')
 plt.xlim(0.5, 20.5)
 ax.set_ylabel('Mean accuracy')
 plt.show()
+# plt.savefig("Opg2.png")
 
-# Use the top scoring n_neighbours as the goto
+
 kfold = model_selection.KFold(n_splits=5, random_state="seed")
+# Use the top scoring n_neighbours as the value for n_neighbours
 model = KNeighborsClassifier(n_neighbors=top_score[0]).fit(X_train, y_train)
+# attempt to predict over the entire testing dataset
 predictions = model.predict(X_test)
+
 correct = 0
 # run over the entirety of the test data and report the accuracy level
 # this is the equivulant of scoring the algorithm
