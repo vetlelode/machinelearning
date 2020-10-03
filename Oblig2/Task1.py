@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import random
 import math
+import csv
 
 X_tot = datasets.load_digits().data
 Y_tot = datasets.load_digits().target
@@ -26,9 +27,10 @@ cm = plt.get_cmap("RdYlGn")
 best = [0, 0, 0]
 for i in range(100, 400):
     # Since this takes a lot of time log the progress every now and then.
-    if i % 50 != 0:
+    if i % 10 == 0:
         print(i)
-        # For running the code a lot faster, but with less simulations uncomment the line below
+    # Uncomment the two lines below to run the simulation alot faster but with a lot less simulations
+    # else:
         # continue
     neurons = ()
     # Generate 5 random choices for the amount of neurons in the hidden layer between i/10 and i/2
@@ -46,11 +48,15 @@ for i in range(100, 400):
         if score > best[2]:
             best = [i, neuron, score]
 
-clf = MLPClassifier(hidden_layer_sizes=(300, 147),
-                    random_state=1, max_iter=1000).fit(X, Y)
-score = clf.score(X_test, Y_test)
-
 ax.scatter3D(xs, ys, zs, c=zs, cmap='Accent')
 plt.tight_layout()
 plt.show()
+
 print("Best result of the simulation was:", best)
+logBest(best)
+
+
+def logBest(best):
+    with open('best.csv', mode="w") as results:
+        writer = csv.writer(results, delimiter=",")
+        writer.writerow(best)
